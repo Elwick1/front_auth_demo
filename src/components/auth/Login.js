@@ -8,8 +8,7 @@ export default class Registration extends Component {
         this.state = {
             email: " ",
             password: " ",
-            password_confirmation: " ",
-            RegistrationErrors: " "
+            LogInErrors: " "
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,25 +19,24 @@ export default class Registration extends Component {
         const {
             email,
             password,
-            password_confirmation
         } = this.state;
 
-        axios.post("http://localhost:3001/registrations", {
+        axios
+        .post("http://localhost:3001/sessions", {
             user: {
                 email: email,
                 password: password,
-                password_confirmation: password_confirmation
             }
         }, 
         { withCredentials: true }
         )
         .then(response => {
-            if (response.data.status === 'created') {
-                this.props.handleSuccessfulAuth(response.data)
+            if (response.data.logged_in) {
+                this.props.handleSuccessfulAuth(response.data);
             }
         })
          .catch(error => {
-            console.log("registration error", error);
+            console.log("Login error", error);
         })
         event.preventDefault();
     }
@@ -69,15 +67,7 @@ export default class Registration extends Component {
                     onChange={this.handleChange} 
                     required 
                     />
-                    <input 
-                    type="password" 
-                    name="password_confirmation" 
-                    placeholder="Password Confirmation" 
-                    value={this.state.password_confirmation} 
-                    onChange={this.handleChange} 
-                    required 
-                    />
-                    <button type="submit">Register</button>
+                    <button type="submit">Log In</button>
                 </form>
             </div>
         )
