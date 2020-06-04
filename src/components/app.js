@@ -69,7 +69,7 @@ export default class App extends Component {
           <Route 
           exact path={"/dashboard"}
           render={props => (
-            <DashBoard {...props} loggedInStatus={this.state.loggedInStatus} />
+            <DashBoard {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user}/>
           )} 
           />
         </Switch>
